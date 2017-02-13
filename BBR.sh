@@ -69,10 +69,10 @@ Install()
 		read code
 		if [ $code = "y" -o $code = "Y" ]; then
 		    if [ $OS_Bit = "64" ]; then
-		        rpm -ivh https://github.com/52fancy/GooGle-BBR/raw/master/kernel/kernel-ml-4.9.0-1.el6.elrepo.x86_64.rpm --force
+		        rpm -ivh http://elrepo.org/linux/kernel/el6/x86_64/RPMS/kernel-ml-4.9.9-1.el6.elrepo.x86_64.rpm --force
 			fi
 			if [ $OS_Bit = "32" ]; then
-		        rpm -ivh https://github.com/52fancy/GooGle-BBR/raw/master/kernel/kernel-ml-4.9.0-1.el6.elrepo.i686.rpm --force
+		        rpm -ivh http://elrepo.org/linux/kernel/el6/i386/RPMS/kernel-ml-4.9.9-1.el6.elrepo.x86_64.rpm --force
 			fi
 			
 			kernel_default=`grep '^title ' /boot/grub/grub.conf | awk -F'title ' '{print i++ " : " $2}' | grep "4.9." | grep -v debug | cut -d' ' -f1`
@@ -87,9 +87,8 @@ Install()
 		    sysctl -p >/dev/null 2>&1
 		
 			rm -f $0
-			echo -n "重启后生效，是否重启？[y]："
-			read is_reboot
-			if [ $is_reboot = "y" -o $is_reboot = "Y" ]; then
+			read -p "重启后生效，是否重启？[y]：" is_reboot
+			if [[ ${is_reboot} == "y" || ${is_reboot} == "Y" ]]; then
 			    reboot
 			else
 			    exit
